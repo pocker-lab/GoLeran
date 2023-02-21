@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Golang</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-dark">
+        <h1 id="golang">Golang</h1>
+<h2 id="go语言变量">Go语言变量</h2>
+<h3 id="声明变量的语法">声明变量的语法</h3>
+<hr>
+<pre><code class="language-golang"><span class="hljs-keyword">var</span> identifier <span class="hljs-keyword">type</span>
+</code></pre>
+<p><code>var</code>: 声明变量关键字</p>
+<p><code>identifier</code>: 变量名称</p>
+<p><code>type</code>: 变量类型</p>
+<h3 id="批量声明变量">批量声明变量</h3>
+<hr>
+<pre><code class="language-golang"><span class="hljs-keyword">var</span> (
+    name <span class="hljs-type">string</span>
+    age  <span class="hljs-type">int</span>
+    b    <span class="hljs-type">bool</span>
+)
+</code></pre>
+<h3 id="变量的初始赋值">变量的初始赋值</h3>
+<hr>
+<pre><code class="language-golang"><span class="hljs-keyword">var</span> 变量名 类型 = 初始值
+<span class="hljs-comment">// 相当于python的变量赋值</span>
+</code></pre>
+<p>如果初始化值已存在，则可以省略类型；<br>
+变量会从初始值中获得类型。</p>
+<pre><code class="language-golang"><span class="hljs-keyword">var</span> 变量名 = 初始值
+<span class="hljs-comment">// 有初始值的情况下声明变量</span>
+</code></pre>
+<h3 id="初始化多个变量">初始化多个变量</h3>
+<hr>
+<p>初始化多个变量，中间用逗号<kbd>,</kbd>分隔</p>
+<pre><code class="language-golang"><span class="hljs-keyword">var</span> name, age, b = <span class="hljs-string">&quot;名字&quot;</span>, <span class="hljs-number">12</span>, <span class="hljs-literal">true</span>
+</code></pre>
+<h3 id="变量的零值">变量的零值</h3>
+<hr>
+<p>没有明确初始值的变量声明会被赋予它们的<strong>零值</strong><br></p>
+<blockquote>
+<p><code>int</code>和<code>float</code>类型变量的<strong>零值</strong>为<code>0</code><br>
+<code>string</code>类型变量的<strong>零值</strong>为<code>&quot;&quot;</code><br>
+<code>bool</code>类型变量的<strong>零值</strong>为<code>false</code><br>
+切片、函数、指针变量的<strong>零值</strong>为<code>nil</code><br></p>
+</blockquote>
+<h3 id="短变量声明">短变量声明</h3>
+<hr>
+<p>在<strong>函数中</strong>，简洁赋值语句<code>:=</code>可在类型明确的地方代替<code>var</code>声明。</p>
+<p><strong>函数外</strong>的每个语句都必须以关键字开始（<code>var</code>, <code>func</code>等等）<br></p>
+<blockquote>
+<p>注意：短变量声明<code>:=</code>只能使用在<strong>函数内部</strong>，函数外不能使用</p>
+</blockquote>
+<pre><code class="language-golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    name := <span class="hljs-string">&quot;名字&quot;</span>
+    age := <span class="hljs-number">18</span>
+    b := <span class="hljs-literal">true</span>
+}
+</code></pre>
+<h3 id="匿名函数">匿名函数</h3>
+<hr>
+<p>如果我们接收到多个变量，有一些变量使用不到，可以使用下划线<kbd>_</kbd>表示变量名称，这种变量叫做<strong>匿名变量</strong>。例如：</p>
+<pre><code class="language-golang"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getNameAndAge</span><span class="hljs-params">()</span></span> (<span class="hljs-type">string</span>, <span class="hljs-type">int</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;名字&quot;</span>, <span class="hljs-number">18</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    name, _ := getNameAndAge()
+    fmt.Printf(<span class="hljs-string">&quot;name: %v\n&quot;</span>, name)
+}
+
+<span class="hljs-comment">//结果： name: 名字</span>
+</code></pre>
+<hr>
+<h2 id="go语言常量">Go语言常量</h2>
+<p><strong>常量</strong>：在程序<strong>编译阶段</strong>就确定下来的值，而程序在<strong>运行时</strong>无法改变该值。<br>
+在Go程序中，<strong>常量</strong>可以是数值类型（包括整形、浮点型和复数行）、布尔类型、字符串类型等。</p>
+<h3 id="定义常量的语法">定义常量的语法</h3>
+<blockquote>
+<p>常量不能用<code>:=</code>语法声明<br>
+<strong>常量名需要大写</strong></p>
+</blockquote>
+<hr>
+<ol>
+<li>
+<p>定义一个<strong>常量</strong>使用<code>const</code>关键字，语法格式如下：</p>
+<pre><code class="language-golang"><span class="hljs-keyword">const</span> constantName [<span class="hljs-keyword">type</span>] = value
+</code></pre>
+<blockquote>
+<p><code>const</code>: 定义常量关键字<br>
+<code>constantName</code>: 常量名称，<strong>规范大写</strong><br>
+<code>type</code>: 常量类型<br>
+<code>value</code>: 常量的值<br></p>
+</blockquote>
+</li>
+<li>
+<p>定义多个<strong>常量</strong></p>
+<pre><code class="language-golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">const</span> (
+        NAME = <span class="hljs-string">&quot;名字&quot;</span>
+        AGE  = <span class="hljs-number">18</span>
+        B    = <span class="hljs-literal">false</span>
+    )
+}
+</code></pre>
+</li>
+<li>
+<p>多个<strong>常量</strong>赋初始值</p>
+<pre><code class="language-golang"><span class="hljs-keyword">const</span> NAME, AGE = <span class="hljs-string">&quot;名字&quot;</span>, <span class="hljs-number">18</span>
+</code></pre>
+</li>
+</ol>
+<h3 id="常量iota计数器">常量<code>iota</code>计数器</h3>
+<p>在<strong>const</strong>语句块中首个<strong>常量</strong>声明为<code>iota</code>后，开始值为<code>0</code>，后面的<strong>常量</strong>都会实现++，无需再次赋值<code>iota</code><br>
+遇到其他<strong>const</strong>语句块时被重置为<code>0</code></p>
+<hr>
+<pre><code class="language-golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">const</span>(
+        A1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 0</span>
+        B1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 1</span>
+        C1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 2</span>
+    )
+    <span class="hljs-comment">// 使用 _ 占位符跳过某些值</span>
+    <span class="hljs-keyword">const</span>(
+        A1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 0</span>
+        _           <span class="hljs-comment">// 使用 _ 占位符跳过 1</span>
+        C1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 2</span>
+    )
+    <span class="hljs-comment">// iota 声明中间插队</span>
+    <span class="hljs-keyword">const</span>(
+        A1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 0</span>
+        B1 = <span class="hljs-number">100</span>    <span class="hljs-comment">// 结果 100</span>
+        C1 = <span class="hljs-literal">iota</span>   <span class="hljs-comment">// 结果 2</span>
+    )
+}
+</code></pre>
+<h2 id="go语言字符串">Go语言字符串</h2>
+<p>一个Go语言字符串时一个任意<strong>字节的常量序列</strong></p>
+<h3 id="go语言字符串字面量">Go语言字符串字面量</h3>
+<hr>
+<p>字符串字面量使用双引号<code>&quot;&quot;</code>或反引号`````来创建。</p>
+
+        
+        
+    </body>
+    </html>
