@@ -185,16 +185,6 @@ func main() {
 
 ### 基本数据类型
 
-- 布尔类型：bool
-- 数值类型：Numeric Types
-  - int8, int16, int32, int64, int
-  - uint8, uint16, uint32, uint64, uint
-  - float32, float64
-  - complex64, complex128
-  - byte:uint8
-  - rune:int32
-- 字符串：string
-
 ---
 
 #### 布尔类型
@@ -208,15 +198,9 @@ func main() {
 
 - 整数：int
   - 有符号：最高位表示符号位，0正数，1负数，其余位数表示数值
-    - int8:
-    - int16:
-    - int32:
-    - int64:
+    - int8, int16, int32, int64
   - 无符号：所有位表示数值
-    - uint8
-    - uint16
-    - uint32
-    - uint64
+    - uint8, uint16, uint32, uint64
 - 浮点：float
   - float32
   - float64
@@ -265,16 +249,39 @@ go语言是静态语言，**定义，赋值，运算必须类型一致**
 
 ## 运算符
 
-<https://www.bilibili.com/video/av47467197/?>
+1. 算术运算符
 
-### 算术运算符
+    > <kbd>+</kbd> 加法
+    > <kbd>-</kbd> 减法
+    > <kbd>*</kbd> 乘法
+    > <kbd>/</kbd> 除法，取商
+    > <kbd>%</kbd> 除法，取余
+    > <kbd>++</kbd> 给自己加
+    > <kbd>--</kbd> 给自己减1
 
-### 关系运算符
+2. 关系运算符（结果为bool类型）
 
-### 逻辑运算符
+    > <kbd>></kbd> 大于
+    > <kbd><</kbd> 小于
+    > <kbd>>=</kbd> 大于等于
+    > <kbd><=</kbd> 小于等于
+    > <kbd>==</kbd> 等于
+    > <kbd>!=</kbd> 不等于
 
-### 位运算符
+3. 逻辑运算符（结果为bool类型）
 
-### 赋值运算符
+    |      运算符      | 描述        |
+    | :-------------: | :---------- |
+    |  <kbd>&&</kbd>  | 逻辑<font color='#FF9999'>**与**</font>运算符。<br>所有的操作数都是``true``，结果才为``true``<br>有一个``false``，结果就为``false``（一假则假，全真才真） |
+    | <kbd>\|\|</kbd> | 逻辑<font color='#FF9999'>**或**</font>运算符。<br>所有的操作数都是``false``，结果才为``false``<br>有一个``true``，结果就为``true``（一真为真，全假为假） |
+    |  <kbd>!</kbd>   | 逻辑<font color='#FF9999'>**非**</font>运算符。<br>`!true -> false`<br>`!false -> true` |
 
-### 优先级运算符
+4. 位运算符
+
+    [位运算符_bilibili](https://www.bilibili.com/video/BV1Db411s7in?p=23&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+
+5. 赋值运算符
+
+    [20230223](https://www.bilibili.com/video/BV1Db411s7in?p=24&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+
+6. 优先级运算符
