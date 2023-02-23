@@ -3,12 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	const (
-		name = "名字"
-		age  = 18
-		b    = false
-	)
-	fmt.Printf("name: %v\n", name)
-	fmt.Printf("age: %v\n", age)
-	fmt.Printf("b: %v\n", b)
+	letter := "A"
+	switch letter {
+	case "A", "E", "I", "O", "U":
+		fmt.Println(letter, "是元音")
+	case "N", "M":
+		fmt.Println("M或N")
+	default:
+		fmt.Println("其他")
+	}
 }

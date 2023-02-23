@@ -1,5 +1,7 @@
 # Golang
 
+[golang标准库中文版](https://studygolang.com/pkgdoc)
+
 ## Go语言变量
 
 ### 声明变量的语法
@@ -247,7 +249,7 @@ go语言是静态语言，**定义，赋值，运算必须类型一致**
 
 ---
 
-## 运算符
+## Go运算符
 
 1. 算术运算符
 
@@ -282,6 +284,199 @@ go语言是静态语言，**定义，赋值，运算必须类型一致**
 
 5. 赋值运算符
 
-    [20230223](https://www.bilibili.com/video/BV1Db411s7in?p=24&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+    **运算符**   | **描述**                       | **示例**
+    :---------:|:----------------------------|:------------------------
+    **`=`**   | 把=右边的值，赋值给=左边的变量             | `C = A + B` 将A + B的值赋值给C
+    **`+=`**  | 把=右边的值与自身的值**相加**后，赋值给=左边的变量 | `C += A` 相当于 C = C + A
+    **`-=`**  | 把=右边的值与自身的值**相减**后，赋值给=左边的变量 | `C -= A` 相当于 C = C - A
+    **`*=`**  | 把=右边的值与自身的值**相乘**后，赋值给=左边的变量 | `C *= A` 相当于 C = C* A
+    **`/=`**  | 把=右边的值与自身的值**相除**后，赋值给=左边的变量 | `C /= A` 相当于 C = C / A
+    **`%=`**  | 把=右边的值与自身的值**取模**后，赋值给=左边的变量 | `C %= A` 相当于 C = C % A
+    **`<<=`** | **左移位**并赋值运算符                | `C <<= 2` 相当于 C = C << 2
+    **`>>=`** | **右移位**并赋值运算符                | `C >>= 2` 相当于 C = C >> 2
+    **`&=`**  | **按位与**并赋值运算符                | `C &= 2` 相当于 C = C & 2
+    **`\|=`**  | **按位或**并赋值运算符                | `C \|= 2` 相当于 C = C \| 2
 
-6. 优先级运算符
+## Go键盘输入&打印输出
+
+[fmt中文文档](https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.3.html)
+
+### 输出
+
+1. `fmt.Print()`：打印输出
+2. `fmt.Printf()`：格式化打印输出
+3. `fmt.Println()`：打印输出后换行
+4. 格式化打印输出占位符：
+
+    **占位符**      | **说明**          | **举例**                                           | **输出**
+    :------------:|:---------------|:------------------------------------------------|:---------------
+    **%v**       | 打印默认值           | Printf\("%v", "渣男"\)                             | 渣男
+    **%T**       | 打印类型            | Printf\("%T", "渣男"\)                             | string
+    **%%**       | 打印百分号           | Printf\("%%"\)                                   | %
+    **%t**       | 打印true 或 false  | Printf\("%t\\n", 2 < 4\)                         | true
+    **%d**       | 打印10进制          | Printf\("%d\\n", 13\)                            | 13
+    **%f,%\.2f** | 打印浮点数，小数点后2位浮点数 | Printf\("%f,%0\.2f\\n", 3\.1415926, 3\.1415926\) | 3\.141593,3\.14
+    **%q**       | 打印带双引号的字符串      | Printf\("%q\\n", "渣男"\)                          | 渣男
+
+    ```golang
+    func main() {
+        fmt.Printf("name: %v\n", "渣男")                 //打印值
+        fmt.Printf("%T\n", "渣男")                       //打印类型
+        fmt.Printf("%%\n")                             //打印%号
+        fmt.Printf("%t\n", 2 < 4)                      //打印bool值
+        fmt.Printf("%d\n", 13)                         //打印十进制
+        fmt.Printf("%f,%0.2f\n", 3.1415926, 3.1415926) //打印浮点数，打印小数点后2位浮点数
+        fmt.Printf("%q\n", "渣男")                       //输出带双引号的字符串，由Go语法安全地转义
+    }
+    ```
+
+### 输入
+
+1. 使用`fmt.Scanln()`来输入
+
+```golang
+func main() {
+    var x int
+    var y float64
+    fmt.Println("请输入一个整数，一个浮点数：")
+    fmt.Scanln(&x, &y) //读取键盘的输入，通过操作内存地址，赋值给x和y
+    fmt.Printf("x: %d,y: %f\n", x, y)
+}
+```
+
+## Go逻辑判断
+
+### 程序的流程结构
+
+- 程序的流程控制结构一共有三种：
+
+1. 顺序结构：从上向下，逐行执行
+2. 选择结构：条件满足，某些代码才会执行，0-1次
+    1. 分支语句：`if`, `switch`, `select`
+3. 循环结构：条件满足，某些代码会被反复的执行多次。0-N次
+    1. 循环语句：`for`
+
+### `if`语句
+
+- `if`语句语法格式：
+
+    ```golang
+    if 布尔表达式 {
+        /* 在布尔表达式为 true 时执行 */
+    }
+    ```
+
+    ```golang
+    if 布尔表达式 {
+        /* 在布尔表达式为 true 时执行 */
+    } else {
+        /* 在布尔表达式为 false 时执行 */
+    }
+    ```
+
+    ```golang
+    if 布尔表达式1 {
+        /* 在布尔表达式为1 true 时执行 */
+    } else if 布尔表达式2 {
+        /* 在布尔表达式1为 false 时，布尔表达式2为 true 时执行 */
+    } else {
+        /* 在上面两个布尔表达式都为 false 时，执行 */
+    }
+    ```
+
+    ```golang
+    if 初始化语句; 条件判断{
+        /* 初始化语句只作用在if语句 */
+    }
+    if num := 4; num > 5{
+        /* 输出语句 */
+    }
+    ```
+
+### `switch`语句
+
+- `switch`语句：
+
+    ```golang
+    switch 变量名{
+        case 数值1: 分支1
+        case 数值2: 分支2
+        case 数值3: 分支3
+        ......
+        default: 最后一个分支
+        /* 没有匹配项时执行 */
+            
+    }
+    ```
+
+    ```golang
+    num := 3
+    switch num {
+    case 1:
+    fmt.Println("第一季度")
+    case 2:
+    fmt.Println("第二季度")
+    case 3:
+    fmt.Println("第三季度")
+    case 4:
+    fmt.Println("第四季度")
+    }
+    /* 输出"第三季度" */
+    ```
+
+- 注意事项：
+    1. `switch`可以作用在其他类型上，`case`后的数值必须和`switch`作用的变量类型一直
+    2. `case`是无序的
+    3. `case`后的数值是唯一的
+    4. `default`是可选的操作
+
+- `switch`其他写法
+
+    1. 省略`switch`后的变量，相当于直接作用在`true`上
+
+        ```golang
+        /* 成绩：
+        [0-59]，不及格c
+        [60-69]，及格
+        [70-79]，中
+        [80-89]，良好
+        [90-100]，优秀 */
+        score := 88
+        switch {
+        case score >= 0 && score < 60:
+        fmt.Println(score, "不及格")
+        case score >= 60 && score < 69:
+        fmt.Println(score, "及格")
+        case score >= 70 && score < 79:
+        fmt.Println(score, "中等")
+        case score >= 80 && score < 89:
+        fmt.Println(score, "良好")
+        case score >= 90 && score <= 100:
+        fmt.Println(score, "优秀")
+        default:
+        fmt.Println("成绩有误。。。")
+        }
+        ```
+
+    2. `case`后可以同时跟随多个数值
+
+        ```golang
+            letter := "A"
+            switch letter {
+            case "A", "E", "I", "O", "U":
+            fmt.Println(letter, "是元音")
+            case "N", "M":
+            fmt.Println("M或N")
+            default:
+            fmt.Println("其他")
+            }
+        ```
+
+    3. `switch`后可以多一条初始化语句
+
+        ```golang
+            switch 初始化语句; 变量{
+            }
+        ```
+
+[20230224](https://www.bilibili.com/video/BV1Db411s7in/?p=32&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
