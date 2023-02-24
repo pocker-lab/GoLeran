@@ -3,13 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	letter := "A"
-	switch letter {
-	case "A", "E", "I", "O", "U":
-		fmt.Println(letter, "是元音")
-	case "N", "M":
-		fmt.Println("M或N")
-	default:
-		fmt.Println("其他")
-	}
+	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	s1 := arr[:5]  //1-5
+	s2 := arr[3:8] //4-8
+	s3 := arr[5:]  //6-10
+	s4 := arr[:]   //1-10
+	fmt.Println(s1)
+	fmt.Println(s2)
+	fmt.Println(s3)
+	fmt.Println(s4)
 }
