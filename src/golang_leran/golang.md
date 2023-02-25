@@ -1,6 +1,6 @@
 # 1. Golang
 
-[golang标准库中文版](https://studygolang.com/pkgdoc)
+> [golang标准库中文版](https://studygolang.com/pkgdoc)
 
 ## 1.1. Go语言变量
 
@@ -39,7 +39,7 @@ var 变量名 类型 = 初始值
 // 相当于python的变量赋值
 ```
 
-如果初始化值已存在，则可以省略类型；<br>
+如果初始化值已存在，则可以省略类型；
 变量会从初始值中获得类型。
 
 ```golang
@@ -51,7 +51,7 @@ var 变量名 = 初始值
 
 ---
 
-初始化多个变量，中间用逗号<kbd>,</kbd>分隔
+初始化多个变量，中间用逗号`,`分隔
 
 ```golang
 var name, age, b = "名字", 12, true
@@ -61,12 +61,12 @@ var name, age, b = "名字", 12, true
 
 ---
 
-没有明确初始值的变量声明会被赋予它们的**零值**<br>
+没有明确初始值的变量声明会被赋予它们的**零值**
 
-> ``int``和``float``类型变量的**零值**为``0``<br>
-> ``string``类型变量的**零值**为``""``<br>
-> ``bool``类型变量的**零值**为``false``<br>
-> 切片、函数、指针变量的**零值**为``nil``<br>
+> ``int``和``float``类型变量的**零值**为``0``
+> ``string``类型变量的**零值**为``""``
+> ``bool``类型变量的**零值**为``false``
+> 切片、函数、指针变量的**零值**为``nil``
 
 ### 1.1.6. 短变量声明
 
@@ -74,7 +74,7 @@ var name, age, b = "名字", 12, true
 
 在**函数中**，简洁赋值语句 ``:=`` 可在类型明确的地方代替``var``声明。
 
-**函数外**的每个语句都必须以关键字开始（``var``, ``func``等等）<br>
+**函数外**的每个语句都必须以关键字开始（``var``, ``func``等等）
 
 > 注意：短变量声明 ``:=`` 只能使用在**函数内部**，函数外不能使用
 
@@ -90,7 +90,7 @@ func main() {
 
 ---
 
-如果我们接收到多个变量，有一些变量使用不到，可以使用下划线<kbd>_</kbd>表示变量名称，这种变量叫做**匿名变量**。例如：
+如果我们接收到多个变量，有一些变量使用不到，可以使用下划线`_`表示变量名称，这种变量叫做**匿名变量**。例如：
 
 ```golang
 package main
@@ -113,15 +113,15 @@ func main() {
 
 ## 1.2. Go语言常量
 
-**常量**：在程序**编译阶段**就确定下来的值，而程序在**运行时**无法改变该值。<br>
-在Go程序中，**常量**只能是数值类型（包括整型、浮点型和复数行）、布尔类型、字符串类型等。<br>
+**常量**：在程序**编译阶段**就确定下来的值，而程序在**运行时**无法改变该值。
+在Go程序中，**常量**只能是数值类型（包括整型、浮点型和复数行）、布尔类型、字符串类型等。
 不曾使用的常量，在编译的时候，是不会报错
 
 ### 1.2.1. 定义常量的语法
 
-> 常量不能用  ``:=``  语法声明<br>
-> **常量名需要大写**<br>
-> <font color=#FF9999>一组常量中，如果某个常量没有初始值，默认和上一行一致</font>
+> 常量不能用  ``:=``  语法声明
+> **常量名需要大写**
+> 一组常量中，如果某个常量没有初始值，默认和上一行一致
 ---
 
 1. 定义一个**常量**使用``const``关键字，语法格式如下：
@@ -130,10 +130,10 @@ func main() {
     const constantName [type] = value
     ```
 
-    > ``const``: 定义常量关键字<br>
-    > ``constantName``: 常量名称，**规范大写**<br>
-    > ``type``: 常量类型<br>
-    > ``value``: 常量的值<br>
+    > ``const``: 定义常量关键字
+    > ``constantName``: 常量名称，**规范大写**
+    > ``type``: 常量类型
+    > ``value``: 常量的值
 
 2. 定义一组**常量**
 
@@ -152,10 +152,10 @@ func main() {
 
 ### 1.2.2. 常量``iota``关键字，枚举类型
 
-iota: 特殊的**常量**，可以被编译器自动修改的常量<br>
-    1. 每当定义一个``const``，``iota``的初始值为``0``<br>
-    2. 每当定义一个**常量**，就会自动累加``1``<br>
-    3. 直到下一个``const``出现，**清零**<br>
+iota: 特殊的**常量**，可以被编译器自动修改的常量
+    1. 每当定义一个``const``，``iota``的初始值为``0``
+    2. 每当定义一个**常量**，就会自动累加``1``
+    3. 直到下一个``const``出现，**清零**
 
 ---
 
@@ -191,7 +191,7 @@ func main() {
 
 #### 1.3.1.1. 布尔类型
 
-布尔型的值只可以是常量 ``true`` 或者 ``false`` <br>
+布尔型的值只可以是常量 ``true`` 或者 ``false``
 例子：``var b bool = true``
 
 ---
@@ -210,19 +210,23 @@ func main() {
 
 ---
 
-#### 1.3.1.3. 字符串类型
+#### 1.3.1.3. 字符串类型`String`
 
-> 字符串就是一串固定长度的字符链接起来的字符序列<br>
-> Go的字符串是由单个字节连接起来的<br>
-> GO语言的字符串的字节使用UTF-8编码表示Unicode文本<br>
+> 字符串就是一串固定长度的字符链接起来的字符序列
+> Go的字符串是由单个字节连接起来的
+> GO语言的字符串的字节使用UTF-8编码表示Unicode文本
 
-1. 概念：多个byte的集合，理解为一个字符序列<br>
+1. 概念：多个byte的集合，理解为一个字符序列
 
-2. 语法：使用双引号<kbd>"</kbd>或反引号<kbd>`</kbd>来创建
+2. 语法：使用双引号`"`或反引号```来创建
 
-3. 转义字符： <kbd>\\</kbd>
+3. 转义字符： `\\`
    1. ``\n`` 换行符
    2. ``\t`` 制表符
+
+4. 字符串的长度`len()`
+    返回的时字节的个数
+    `len(string)`
 
 ---
 
@@ -239,11 +243,11 @@ func main() {
 
 ---
 
-#### 数组类型（Array）
+#### 1.3.2.1. 数组类型（Array）
 
 > 数组一旦定义长度后，长度就不能变，不能访问超过长度的下标
 
-1. 概念：存储一组相同**数据类型**的数据结构<br>理解为容器，存储一组数据
+1. 概念：存储一组相同**数据类型**的数据结构理解为容器，存储一组数据
 2. 语句：
     1. `var 数组名 [长度] 数据类型`
     2. `var 数组名 = [长度] 数据类型{元素1, 元素2,...}`：在定义数组时赋值
@@ -267,7 +271,7 @@ func main() {
         ```
 
     3. 方法三：使用`range`，词义：范围
-        [菜鸟教程：range](https://www.runoob.com/go/go-range.html)
+        > [菜鸟教程：range](https://www.runoob.com/go/go-range.html)
 
         ```golang
             var arr1 = [5]int{1, 2, 3, 4, 5}
@@ -297,7 +301,7 @@ func main() {
     1. 语法：`var 数组名 [长度] [长度]`
     2. **多层嵌套数组**
 
-#### 切片（Slice）
+#### 1.3.2.2. 切片（Slice）
 
 1. 定义语法
     1. 正常语法
@@ -309,7 +313,7 @@ func main() {
 
 2. `append()`在切片末尾增加元素
     1. 语法：`切片名 = append(切片名, 元素1, 元素2, ....)`
-    2. 在切片末尾添加另一个切片的所有元素：`切片名 = append(切片1, 切片2...)`后面三个<kbd>.</kbd>不能省略
+    2. 在切片末尾添加另一个切片的所有元素：`切片名 = append(切片1, 切片2...)`后面三个`.`不能省略
 
 3. 从已有的数组上进行切片
 
@@ -319,6 +323,131 @@ func main() {
         s2 := arr[3:8] //4-8
         s3 := arr[5:]  //6-10
         s4 := arr[:]   //1-10
+    ```
+
+---
+
+#### 1.3.2.3. 集合（Map）
+
+> 类似python的字典
+> map ： 映射，一种专门用于存储键值对的集合，属于引用类型
+> 存储的是无序的键值对
+> 键不能重复，且和值一一对应，重复的键值会覆盖原来的
+
+1. 创建`map`，`map`初始化
+    1. 声明变量，默认`map`是`nil`，没有初始值，无法直接向里面添加键值对
+
+        ```golang
+            var map名
+            map[键类型]值类型
+        ```
+
+    2. 使用`make()`创建`map`
+
+        ```golang
+            map名 := make(map[键类型]值类型)
+        ```
+
+    3. 创建时初始化值
+
+        ```golang
+            map名 := map[键类型]值类型 {
+                键: 值, 键: 值, ...
+            }
+        ```
+
+2. 添加键值对/删除键值对
+    1. `map名[键] = 值`
+
+3. 根据键获取对应的值
+    1. 如果键存在，获取对应的值
+    2. 如果键不存在，获取的是值类型的零值
+    3. 通过`ok-idiom`来判断获取的键存不存在
+
+        ```golang
+            值, ok := map名[键]
+            if ok {
+                // 如果键存在，值就是对应的数据，ok为true
+                fmt.Println("键值存在")
+            } else {
+                // 如果键不存在，值就是对应值类型的默认值，ok为false
+                fmt.Println("键不存在，获取的是值对应类型的零值")
+            }
+        ```
+
+4. 删除键值对
+    1. `delete(map名, 键)`
+
+5. map长度
+    1. `len(map名)`
+
+6. map的遍历
+
+    ```golang
+        map1 := make(map[int]string)
+        map1[1] = "渣男"
+        map1[2] = "站南"
+        map1[3] = "站北"
+        map1[4] = "站西"
+        map1[5] = "站东"
+
+        //1. 无遍历map
+        for k, v := range map1 {
+            fmt.Println(k, v)
+        }
+
+        //2. 有序遍历map
+        /*
+            1. 获取所有的键，存储到切片/数组
+            2. 将切片或数组进行排序
+            3. 遍历键，map名[键]，获取有序的键值对
+        */
+        //1.1 获取所有的键，存储到切片
+        // 对于int或float类型
+        keys := make([]int, 0, len(map1))
+        for k, _ := range map1 {
+            keys = append(keys, k)
+        }
+        fmt.Println(keys)
+        //1.2 使用sort包下的排序方法进行排序
+        sort.Ints(keys)
+        fmt.Println(keys)
+        //1.3 遍历keys，取对应map1的值
+        for _, key := range keys {
+            fmt.Println(key, map1[key])
+        }
+        /*
+            对于map键类型为string时，使用sort.Strings进行排序
+        */
+    ```
+
+7. `集合（map）`和`切片（slice）`的结合使用：
+    1. 创建map用于存储个人信息
+    2. 每个map存储一个人的信息
+    3. 将这些map存入到slice中
+    4. 打印遍历输出
+
+    ```golang
+        // 1. 创建4个map存储4个人的信息
+        map1 := map[string]string{"name": "渣男", "age": "20"}
+        map2 := map[string]string{"name": "站北", "age": "18"}
+        map3 := map[string]string{"name": "站东", "age": "28"}
+        map4 := map[string]string{"name": "站西", "age": "38"}
+
+        // 2. 将这4个map存入到slice中
+        s1 := make([]map[string]string, 0, 4)
+        s1 = append(s1, map1)
+        s1 = append(s1, map2)
+        s1 = append(s1, map3)
+        s1 = append(s1, map4)
+        // 3. 遍历切片打印
+
+        for i, val := range s1 {
+            // val = map1, map2, map3, map4
+            fmt.Printf("第 %d 个人的信息时：\n", i+1)
+            fmt.Printf("姓名： %s\n", val["name"])
+            fmt.Printf("年龄： %s\n", val["age"])
+        }
     ```
 
 ---
@@ -337,34 +466,34 @@ go语言是静态语言，**定义，赋值，运算必须类型一致**
 
 1. 算术运算符
 
-    > <kbd>+</kbd> 加法
-    > <kbd>-</kbd> 减法
-    > <kbd>*</kbd> 乘法
-    > <kbd>/</kbd> 除法，取商
-    > <kbd>%</kbd> 除法，取余
-    > <kbd>++</kbd> 给自己加
-    > <kbd>--</kbd> 给自己减1
+    > `+` 加法
+    > `-` 减法
+    > `*` 乘法
+    > `/` 除法，取商
+    > `%` 除法，取余
+    > `++` 给自己加
+    > `--` 给自己减1
 
 2. 关系运算符（结果为bool类型）
 
-    > <kbd>></kbd> 大于
-    > <kbd><</kbd> 小于
-    > <kbd>>=</kbd> 大于等于
-    > <kbd><=</kbd> 小于等于
-    > <kbd>==</kbd> 等于
-    > <kbd>!=</kbd> 不等于
+    > `>` 大于
+    > `<` 小于
+    > `>=` 大于等于
+    > `<=` 小于等于
+    > `==` 等于
+    > `!=` 不等于
 
 3. 逻辑运算符（结果为bool类型）
 
     |      运算符      | 描述        |
     | :-------------: | :---------- |
-    |  <kbd>&&</kbd>  | 逻辑<font color='#FF9999'>**与**</font>运算符。<br>所有的操作数都是``true``，结果才为``true``<br>有一个``false``，结果就为``false``（一假则假，全真才真） |
-    | <kbd>\|\|</kbd> | 逻辑<font color='#FF9999'>**或**</font>运算符。<br>所有的操作数都是``false``，结果才为``false``<br>有一个``true``，结果就为``true``（一真为真，全假为假） |
-    |  <kbd>!</kbd>   | 逻辑<font color='#FF9999'>**非**</font>运算符。<br>`!true -> false`<br>`!false -> true` |
+    |  `&&`  | 逻辑**与**运算符。所有的操作数都是``true``，结果才为``true``有一个``false``，结果就为``false``（一假则假，全真才真） |
+    | `\|\|` | 逻辑**或**运算符。所有的操作数都是``false``，结果才为``false``有一个``true``，结果就为``true``（一真为真，全假为假） |
+    |  `!`   | 逻辑**非**运算符。`!true -> false``!false -> true` |
 
 4. 位运算符
 
-    [位运算符_bilibili](https://www.bilibili.com/video/BV1Db411s7in?p=23&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+    > [位运算符_bilibili](https://www.bilibili.com/video/BV1Db411s7in?p=23&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
 
 5. 赋值运算符
 
@@ -383,7 +512,7 @@ go语言是静态语言，**定义，赋值，运算必须类型一致**
 
 ## 1.5. Go键盘输入&打印输出
 
-[fmt中文文档](https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.3.html)
+> [fmt中文文档](https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.3.html)
 
 ### 1.5.1. 输出
 
@@ -491,7 +620,7 @@ func main() {
         ......
         default: 最后一个分支
         /* 没有匹配项时执行 */
-            
+
     }
     ```
 
@@ -598,13 +727,13 @@ func main() {
 
 2. `for`语句的其他写法
 
-    1. 省略`init`和`post`<br>相当于`while(条件)`
+    1. 省略`init`和`post`相当于`while(条件)`
 
         ```golang
             for condition {}
         ```
 
-    2. 省略`init`，`condition`和`post`<br>相当于`while(true)`，一直循环
+    2. 省略`init`，`condition`和`post`相当于`while(true)`，一直循环
 
         ```golang
             for {}
@@ -736,7 +865,7 @@ func main() {
 
 ---
 
-## `goto`语句
+## 1.7. `goto`语句
 
 1. 作用：可以无条件地转移到过程中指定的行
 
@@ -751,7 +880,7 @@ func main() {
 
 ---
 
-## 生成随机数
+## 1.8. 生成随机数
 
 使用`math/rand`包
 
@@ -767,3 +896,197 @@ func main() {
     }
 }
 ```
+
+## 1.9. `strings`包，和字符串处理相关的包
+
+```golang
+s1 := "hello world"
+    // 1. 判断s1是否包含指定内容（"world"），返回值为bool类型
+    fmt.Println(strings.Contains(s1, "world"))
+    // 2. 判断s1是否包含子串"abcd"中的任一字符。，返回值为bool类型
+    fmt.Println(strings.ContainsAny(s1, "abcd"))
+    // 3. 统计子串(“l”)在s1中出现的次数，返回值为int类型
+    fmt.Println(strings.Count(s1, "l"))
+    // 4. 判断s2是否以xxx开头，是否以xxx结尾，返回值为bool类型
+    s2 := "2023课堂笔记.txt"
+    if strings.HasPrefix(s2, "2023") {
+        fmt.Println("s2， 是以2023开头")
+    }
+    if strings.HasSuffix(s2, ".txt") {
+        fmt.Println("s2， 是以.txt结尾")
+    }
+    // 5.判断子串"l"在字符串s1中第一次出现的位置，不存在则返回-1，返回值为int类型
+    fmt.Println(strings.Index(s1, "l"))
+
+    // 6. 字符串的拼接
+    ss1 := []string{"abc", "cbd", "ddd"}
+    ss2 := strings.Join(ss1, "*")
+    fmt.Println(ss2)
+
+    // 7 字符切割，切割成集合
+    ss3 := "123,345,678,90"
+    ss4 := strings.Split(ss3, ",")
+    fmt.Println(ss4)
+```
+
+## 1.10. `strconv`包，字符串和基本类型之前的转换
+
+```golang
+func main() {
+    // 将string类型转换为int类型
+    i3, _ := strconv.Atoi("-42")
+    fmt.Printf("%T,%d\n", i3, i3)
+    // 将int类型转换为string类型
+    ss3 := strconv.Itoa(-42)
+    fmt.Printf("%T,%s\n", ss3, ss3)
+}
+```
+
+## 1.10.1. 函数 `function`
+
+> [菜鸟教程_func](https://www.runoob.com/go/go-functions.html)
+
+### 1.10.2. 函数的定义
+
+1. 概念：
+    具有特定功能的代码，可以被多次调用执行
+2. 意义：
+    1. 可以避免重复的代码
+    2. 增强程序的扩展性
+3. 使用：
+    1. 函数的定义，也叫声明
+    2. 函数的调用，就是执行函数中代码的过程
+4. 语法：
+
+    ```golang
+        func 函数名(形式参数列表)(返回值列表) {
+            函数体
+            return 返回值
+        }
+    ```
+
+5. 函数的参数
+
+    1. 形式参数：定义函数时，用于接收外部传入的数据，叫做形参。
+    2. 实际参数：调用函数时，传给形参的实际的数据，叫实参。
+    3. 调用函数时，实参与形参必须一一对应：顺序，个数，类型
+
+    ```golang
+    func main() {
+        //调用getSum函数，并传入值为50的实参
+        getSum(50)
+    }
+
+    func getSum(n int) {
+        var sum int
+        // 这里的n为调用函数时传入的50
+        for i := 1; i <= n; i++ {
+            sum += i
+        }
+        fmt.Printf("1-%d的和是：%d\n", n, sum)
+    }
+    ```
+
+6. 函数的可变参数
+
+    1. 概念：一个函数的参数的类型确定，但是个数不确定，就可以使用可变参数
+    2. 语法：`参数名 ... 参数的类型`
+    对于函数，可变参数相当于一个切片
+    调用函数时，可以传入0-n个参数
+    3. 注意事项：
+        1. 可变参数要放在参数列表的最后
+        2. 一个函数的参数列表只能有一个可变参数
+
+    ```golang
+    func main() {
+        getSum(1, 2, 3, 4, 5)
+    }
+
+    func getSum(nums ...int) {
+        sum := 0
+        for i := 0; i < len(nums); i++ {
+            sum += nums[i]
+        }
+        fmt.Println("总和是：", sum)
+    }
+    ```
+
+7. 函数的参数传递
+
+    > [bilibili_参数传递](https://www.bilibili.com/video/BV1Db411s7in/?p=67&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+
+8. 函数的返回值
+
+    > 一个函数的执行结果，返回给函数的调用处，执行结果就叫做函数的返回值
+
+    ```golang
+    func main() {
+    res := getSum(50, 50)
+    fmt.Printf("%T,%d\n", res, res)
+    }
+    // (sum int)表明指定要返回的变量
+    // 所以return后不用写sum
+    func getSum(nums ...int) (sum int) {
+        for i := 0; i < len(nums); i++ {
+            sum += nums[i]
+        }
+        return
+    ```
+
+9. 函数的多返回值
+
+    ```golang
+        func main() {
+            res1, res2 := rectangle(5, 3)
+            fmt.Printf("周长：%.2f，面积：%.2f", res1, res2)
+            }
+
+        // 定义函数，用于求矩形的周长和面积
+        func rectangle(len, wid float64) (peri, area float64) {
+            peri = (len + wid) *s 2
+            area = len * wid
+            return
+        }
+    ```
+
+10. 空白标识符`_`
+    > 代替任何类型的任何值
+    > 替代函数的返回值，用于舍弃函数返回值中的个别变量
+
+11. 递归函数
+
+    > [bilibili_递归函数](https://www.bilibili.com/video/BV1Db411s7in/?p=72&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+
+    ```golang
+    func main() {
+        // 求1-5的和，用递归函数
+        num := getSum(5)
+        fmt.Printf("num: %v\n", num)
+    }
+
+    func getSum(n int) int {
+        if n == 1 {
+            return 1
+        }
+        return getSum(n-1) + n
+    }
+    ```
+
+    ```golang
+    func main() {
+        // 斐波那契数列
+        res:= getFibonacci(12)
+        fmt.Printf("res: %v\n", res)
+    }
+
+    func getFibonacci(n int) int{
+        if n==1 || n==2{
+            return 1
+        }
+        return getFibonacci(n-1)+ getFibonacci(n-2)
+    }
+    ```
+
+## `defer`语句
+
+> [bilibili_defer语句](https://www.bilibili.com/video/BV1Db411s7in/?p=73&spm_id_from=pageDriver&vd_source=2fccd62dc87437c40cb47db5cee75f89)
