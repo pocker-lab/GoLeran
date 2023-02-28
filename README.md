@@ -309,3 +309,5 @@ for val := 0; val < 10; val++ {
         fmt.Println("\n这里是B")
         /* 在A是5的时候，会跳转到B这里*/
     ```
+
+[数组与切片](https://www.bilibili.com/video/BV1P5411t7Wr/?spm_id_from=333.999.0.0&vd_source=2fccd62dc87437c40cb47db5cee75f89)
