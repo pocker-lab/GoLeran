@@ -178,15 +178,290 @@ fmt.Printf("val --> %T, %v", val, val)
 
 ### 接口 `interface`
 
-### 数据 `[数组长度]值类型{值1, 值2, ...}`
+### 数组（Array）
 
-### 切片 slice `[]值类型{值1, 值2, ...}`
+1. 定义数组`[数组长度]值类型{值1, 值2, ...}`
 
-### map `[key类型]值类型{key:值, key:值， ...}`
+    ```golang
+    // 确定长度的数组定义
+    arr1 := [5]int{0, 1, 2, 3, 4}
+    fmt.Printf("arr1-->%v, %T\n", arr1, arr1)
+    // arr1-->[0 1 2 3 4], [5]int
+
+    // 不确定长度的数组定义，有go自动确定长度
+    arr2 := [...]int{0, 21, 23, 3, 4, 1, 12, 1233, 123, 1, 2, 31, 23, 12}
+    fmt.Printf("arr2-->%v, %T\n", arr2, arr2)
+    // arr2-->[0 21 23 3 4 1 12 1233 123 1 2 31 23 12], [14]int
+
+    // 先定义数组及长度，后面赋值
+    var arr3 = new([10]int)
+    arr3[5] = 5
+    fmt.Printf("arr3-->%v, %T\n", arr3, arr3)
+    // arr3-->&[0 0 0 0 0 5 0 0 0 0], *[10]int
+    ```
+
+2. 循环数组
+
+    - 利用 for 循环数组
+
+        ```golang
+        // 利用 for 循环数组
+        arr1 := [...]string{"狗子", "猫", "老虎"}
+
+        for i := 0; i < len(arr1); i++ {
+            fmt.Printf("%d-->%v\n", i, arr1[i])
+            /*
+                0-->狗子
+                1-->猫
+                2-->老虎
+            */
+        }
+        ```
+
+    - 利用 for + range 循环数组  
+    range 是获取数组的所有索引，以及对应的值
+
+        ```golang
+        // 利用 for + range 循环数组
+        // range 是获取数组的索引，对应的值
+        for i, v := range arr1 {
+            fmt.Printf("%d-->%v\n", i, v)
+            /*
+                0-->狗子
+                1-->猫
+                2-->老虎
+            */
+        }
+        ```
+
+3. `len()`和`cap()`
+
+    > len(数组)：数组的长度  
+    > cap(数组)：数组的容量长度
+
+4. 多维数组
+
+    > 二维数组
+
+    ```golang
+    // 二维数组，一个数组里面嵌套另一个数组
+    er := [3][3]int{
+        {0, 1, 2},
+        {1, 2, 3},
+        {2, 3, 4},
+    }
+    fmt.Printf("er: %v\n%T\n", er, er)
+    /*
+        er: [[0 1 2] [1 2 3] [2 3 4]]
+        [3][3]int
+    */
+    ```
+
+    > 三维数组
+
+    ```golang
+    // 三维数组
+    san := [3][3][3]int{
+        {{0, 1, 2}, {1, 2, 3}, {2, 3, 4}},
+        {{1, 2, 3}, {2, 3, 4}, {3, 4, 5}},
+        {{2, 3, 4}, {3, 4, 5}, {4, 5, 6}},
+    }
+    fmt.Printf("san: %v\n%T", san, san)
+    /*
+        san: [[[0 1 2] [1 2 3] [2 3 4]] [[1 2 3] [2 3 4] [3 4 5]] [[2 3 4] [3 4 5] [4 5 6]]]
+        [3][3][3]int
+    */
+    ```
+
+### 切片（slice）
+
+1. 定义`[]值类型{值1, 值2, ...}`  
+使用`make([]int, 长度, 容量)`创建的切片是指定类型的默认值  
+如`int`类型的默认值为`0`，`string`类型的默认值为`""`
+
+    ```golang
+    // 定义空切片
+    var sl1 []int
+    // sl1: []int,[]
+    // 定义切片并指定初始长度和容量
+    sl2 := make([]int, 4, 4)
+    // 
+    // sl2: []int,[0 0 0 0]
+    ```
+
+2. 以数组为蓝本创建切片
+
+    ```golang
+    arr := [4]int{0, 1, 2, 3}
+    // 以数组为蓝本创建切片
+    sl1 := arr[:]   //[]int,[0 1 2 3]
+    sl2 := arr[:3]  //[]int,[0 1 2]
+    sl3 := arr[2:]  //[]int,[2 3]
+    sl4 := arr[1:4] //[]int,[1 2 3]
+
+    fmt.Printf("sl1-->%T,%v\n", sl1, sl1)
+    fmt.Printf("sl2-->%T,%v\n", sl2, sl2)
+    fmt.Printf("sl3-->%T,%v\n", sl3, sl3)
+    fmt.Printf("sl4-->%T,%v\n", sl4, sl4)
+    ```
+
+3. 切片的用法
+
+    1. 添加值`append()`
+
+        ```golang
+        sl1 := []int{1, 2, 3}
+        // 在后面添加 4,5,6
+        sl1 = append(sl1, 4, 5, 6)
+        // sl1: [1 2 3 4 5 6]
+        ```
+
+    2. 复制切片`copy`
+
+        将`sl2`的值复制到`sl1[3:]`的位置
+
+        ```golang
+        sl1 := make([]int, 6)
+        sl2 := []int{4, 5, 6}
+        copy(sl1[3:], sl2)
+        // sl1: [0 0 0 4 5 6]
+        // sl2: [4 5 6]
+        ```
+
+### map
+
+`[key类型]值类型{key:值, key:值， ...}`
+
+1. 定义
+
+    ```golang
+    // 定义map
+    var m1 map[string]string
+    // m1: map[string]string,map[]
+
+    // 简短定义map
+    m2 := map[string]string{}
+    // m2: map[string]string,map[]
+
+    // 使用make定义map
+    m3 := make(map[string]string)
+    // m3: map[string]string,map[]
+    ```
+
+2. 使用 map ，添加元素
+
+    ```golang
+    m1 := map[string]string{}
+    m1["name"] = "渣男"
+    m1["sex"] = "男"
+    // m1: map[name:渣男 sex:男]
+    ```
+
+3. 使用 delete 删除元素
+
+    ```golang
+    m1 := map[string]string{
+        "name": "渣男",
+        "sex":  "男",
+    }
+    // 删除"sex"键值对
+    delete(m1, "sex")
+    // m1: map[name:渣男]
+    ```
+
+4. 循环map
+
+    ```golang
+    m1 := map[string]string{
+        "name": "渣男",
+        "sex":  "男",
+    }
+    for k, v := range m1 {
+        fmt.Println(k, v)
+        /*
+        name 渣男
+        sex 男
+        */
+    }
+    ```
+
+---
 
 ### 指针 `*`
 
-### 函数 `func`
+[bilibili](https://www.bilibili.com/video/BV1mg4y187pS/?spm_id_from=333.999.0.0&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+
+---
+
+### 函数方法 `func`
+
+- 函数定义语法：
+
+    ```golang
+        func 函数名(传参1 传参2 类型,[不定长参...类型])(返回值 类型, 返回值 类型){
+            函数体
+            return 返回值
+        }
+    ```
+
+1. 定义一个函数，并传入两个类型相同参数，返回一个参数
+
+    ```golang
+    func add(num1, num2 int) (num int) {
+        num = num1 + num2
+        return num
+    }
+    ```
+
+2. 定义一个函数，传入不定长参数，返回一个参数
+
+    ```golang
+    func get(num1 ...int) (number1 int) {
+        for _, v := range num1 {
+            number1 += v
+        }
+        return number1
+    }
+    ```
+
+3. 匿名函数
+
+    ```golang
+    func main() {
+        ff := func() {
+            num1 := 16
+            fmt.Print(num1)
+        }
+        ff() // 16
+    }
+    ```
+
+4. 递归函数
+
+    ```golang
+    // 求1-n的和，递归函数
+    func getSum(n int) int {
+        if n == 1 {
+            return 1
+        }
+        return getSum(n-1) + n
+    }
+    ```
+
+5. `defer`语句，延迟执行
+
+    ```golang
+    func main() {
+        defer info() // 虽然调用函数在第一行，但是会在最后执行
+        fmt.Print("1\n")
+        fmt.Print("2\n")
+        fmt.Print("3\n")
+    }
+
+    func info() {
+        fmt.Print("我在这里")
+    }
+    ```
 
 ### 管道 `chan`
 
@@ -309,5 +584,3 @@ for val := 0; val < 10; val++ {
         fmt.Println("\n这里是B")
         /* 在A是5的时候，会跳转到B这里*/
     ```
-
-[数组与切片](https://www.bilibili.com/video/BV1P5411t7Wr/?spm_id_from=333.999.0.0&vd_source=2fccd62dc87437c40cb47db5cee75f89)
