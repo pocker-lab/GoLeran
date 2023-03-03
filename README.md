@@ -174,9 +174,13 @@ fmt.Printf("val --> %T, %v", val, val)
 
 ## 复杂数据类型
 
-### 结构 `struct`
+### 结构体 `struct`
+
+[golang的结构体struct声明和使用](https://www.bilibili.com/video/BV1Kf4y1S7eP/?spm_id_from=333.999.0.0)
 
 ### 接口 `interface`
+
+[golang的接口interface介绍和工作中的使用](https://www.bilibili.com/video/BV1WA411b7ZF/?spm_id_from=333.788&vd_source=2fccd62dc87437c40cb47db5cee75f89)
 
 ### 数组（Array）
 
@@ -584,3 +588,9 @@ for val := 0; val < 10; val++ {
         fmt.Println("\n这里是B")
         /* 在A是5的时候，会跳转到B这里*/
     ```
+
+## 并发
+
+[golang的并发神器goroutine 和 channel](https://www.bilibili.com/video/BV1Vf4y1S75t/?spm_id_from=333.788&vd_source=2fccd62dc87437c40cb47db5cee75f89)
+
+## 断言

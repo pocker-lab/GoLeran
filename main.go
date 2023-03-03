@@ -1,31 +1,25 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"go_do/data_center"
 )
 
 type Data struct {
-	TotalNum string `json:"total_num"`
-	Symbol   string `json:"symbol"`
+	Status int `json:"status"`
+	Msg    int `json:"msg"`
 }
 
 func main() {
-
-	sinaBody := data_center.SinaGetRequest(1)
-	sinaBody2 := data_center.SinaGetRequest(5)
-	//
-	fmt.Println(sinaBody)
-	fmt.Println("-----------------")
-	fmt.Println(sinaBody2)
-	////fmt.Printf("%T", sinaBody)
-	//
-	//fmt.Print("\n--------------------------------")
-	//re := regexp.MustCompile(`(?m)/\*.*\*/`)
-	//
-	//sinaBody1 := re.ReplaceAllString(sinaBody, "")
-	//fmt.Print(sinaBody1)
-
-	test()
+	msg := "{\"status\":200, \"msg\":18}"
+	var data Data
+	if err := json.Unmarshal([]byte(msg), &data); err == nil {
+		fmt.Println(data.Status, data.Msg)
+	} else {
+		fmt.Println(err)
+	}
+	var da Data
+	da.Status = 188
+	fmt.Printf("da.Status: %v\n", da.Status)
 
 }
