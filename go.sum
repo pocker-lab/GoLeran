@@ -1,2 +1,4 @@
+github.com/pocker-lab/goutils v0.0.0-20230305110938-6b1c9ce51204 h1:zHRbLg6ZXrp7cNlXmPVepiz2PWmEqeKC0MRKupEqp2s=
+github.com/pocker-lab/goutils v0.0.0-20230305110938-6b1c9ce51204/go.mod h1:om9Cpdbb41XBTQZHPdT3ekNrtSACIHzInqQGzPVpMGM=
 golang.org/x/text v0.8.0 h1:57P1ETyNKtuIjB4SRd15iJxuhj8Gc416Y78H3qgMh68=
 golang.org/x/text v0.8.0/go.mod h1:e1OnstbJyHTd6l/uOt8jFFHp6TRDWZR/bV3emEE/zU8=
