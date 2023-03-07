@@ -1,5 +1,11 @@
 # go
 
+学习链接：  
+1. [coderit666/GoGuide](https://github.com/coderit666/GoGuide)  
+2. [EbookFoundation/Golang](https://github.com/EbookFoundation/free-programming-books/blob/main/books/free-programming-books-zh.md#golang)  
+3. [go_learn_microsoft](https://learn.microsoft.com/zh-cn/training/paths/go-first-steps/)  
+4. [go语言圣经](https://books.studygolang.com/gopl-zh/)
+
 ## 变量声明
 
 1. 申明变量，显式声明
