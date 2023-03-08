@@ -9,5 +9,6 @@ gen
 *.exe
 *.exe*
 *.txt
+godemo/*.json
 
 GoPing/*.txt
