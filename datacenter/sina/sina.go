@@ -1,11 +1,10 @@
-package main
+package sina
 
 import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"godemo/sina"
 	"log"
 )
 
@@ -39,9 +38,9 @@ type data struct {
 	// Zjzfe      int         `json:"zjzfe"`      // 最近总份额(万份)
 }
 
-func main() {
-	str1 := sina.GetSina(1)
-	str2 := sina.GetSina(2)
+func SinaMain() {
+	str1 := GetSina(1)
+	str2 := GetSina(2)
 	var (
 		au1 = jsonA{}
 		au2 = jsonA{}
