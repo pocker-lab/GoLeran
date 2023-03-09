@@ -5,10 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	goutils "github.com/pocker-lab/goutils"
+	"io"
 	"log"
+	"net/http"
+	"strconv"
 )
 
-type jsonA struct {
+type sinaJson struct {
 	TotalNum   int    `json:"total_num"`  // 基金总数
 	Data       []data `json:"data"`       // 基金数据切片
 	Lastupdate string `json:"lastupdate"` // 最后更新时间
@@ -38,26 +42,21 @@ type data struct {
 	// Zjzfe      int         `json:"zjzfe"`      // 最近总份额(万份)
 }
 
-func SinaMain() {
-	str1 := GetSina(1)
-	str2 := GetSina(2)
+func MainSina() {
+	str1 := GetSina(1, 9000)
+	str2 := GetSina(2, 9000)
 	var (
-		au1 = jsonA{}
-		au2 = jsonA{}
+		au1 = sinaJson{}
+		au2 = sinaJson{}
 	)
 
-	json.Unmarshal([]byte(str1), &au1)
-	json.Unmarshal([]byte(str2), &au2)
+	err := json.Unmarshal([]byte(str1), &au1)
+	goutils.CheckError(err)
+	err = json.Unmarshal([]byte(str2), &au2)
+	goutils.CheckError(err)
 
 	au1.Data = append(au1.Data, au2.Data...)
 	fmt.Printf("%v--->%v\n", au1.TotalNum, len(au1.Data))
-
-	//jsonStudent, err := json.Marshal(au1)
-	//if err != nil {
-	//	fmt.Println("转换为json错误")
-	//}
-	//str3 := jsonStudent
-	//Goutils.WriteFile2(string(str3))
 
 	// 将数据写入到文件中
 	//bytes, _ := json.MarshalIndent(au1.Data, "", "  ")
@@ -66,33 +65,73 @@ func SinaMain() {
 	//Goutils.WriteFile2(string(bytes))
 
 	db, err := sql.Open("mysql", "root:123456@tcp(localhost:3306)/godb?charset=utf8")
-	check(err)
-	defer db.Close()
-	db.Exec("ALTER TABLE sina AUTO_INCREMENT = 0")
+	goutils.CheckError(err)
+
+	defer func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+			log.Panicln(err)
+		}
+	}(db)
+
+	_, err = db.Exec("ALTER TABLE sina AUTO_INCREMENT = 0")
+	goutils.CheckError(err)
 
 	tx, err := db.Begin()
-	check(err)
+	goutils.CheckError(err)
 
 	//result, err := tx.Exec("INSERT INTO godb.sina (symbol,name,clrq,jjjl) VALUES(?,?,?,?)", "000001", "华夏成长混合", "2001-12-18 00:00:00", "王泽实、万方方")
-	//check(err)
+	//goutils.CheckError(err)
 	//fmt.Println(result.RowsAffected())
 
 	for _, k := range au1.Data {
 		stmt, err := tx.Prepare("INSERT INTO godb.sina (symbol,name,clrq,jjjl) VALUES(?,?,?,?)")
-		check(err)
-		stmt.Exec(k.Symbol, k.Name, k.Clrq, k.Jjjl)
-		//fmt.Println(res.RowsAffected())
-		stmt.Close()
+		goutils.CheckError(err)
+
+		_, err = stmt.Exec(k.Symbol, k.Name, k.Clrq, k.Jjjl)
+		goutils.CheckError(err)
+
+		err = stmt.Close()
+		goutils.CheckError(err)
 	}
 
 	err = tx.Commit()
-	check(err)
+	goutils.CheckError(err)
 
 }
 
-// check 因为要多次检查错误，所以干脆自己建立一个函数。
-func check(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
+func GetSina(page, num int) (str string) {
+	url := "http://vip.stock.finance.sina.com.cn/fund_center/data/jsonp.php/IO.XSRV2.CallbackList['9o_rfPFvmkgcHnSk']/NetValueReturn_Service.NetValueReturnOpen"
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	goutils.CheckError(err)
+
+	req.Header.Add("User-Agent", "Apifox/1.0.0 (https://www.apifox.cn)")
+	req.Header.Add("Accept", "*/*")
+	req.Header.Add("Host", "vip.stock.finance.sina.com.cn")
+	req.Header.Add("Connection", "keep-alive")
+	req.Header.Add("Cookie", "MONEY-FINANCE-SINA-COM-CN-WEB5=")
+	q := req.URL.Query()
+	q.Add("page", strconv.Itoa(page))
+	q.Add("num", strconv.Itoa(num))
+	q.Add("sort", "zmjqm")
+	q.Add("asc", "0")
+	q.Add("ccode", "")
+	q.Add("type2", "")
+	q.Add("type3", "")
+	req.URL.RawQuery = q.Encode()
+
+	res, err := client.Do(req)
+	goutils.CheckError(err)
+	body, err := io.ReadAll(res.Body)
+	goutils.CheckError(err)
+
+	defer func(Body io.ReadCloser) {
+		_ = Body.Close()
+	}(res.Body)
+
+	//str = string(body[91 : len(body)-2])
+	str = string(body[91 : len(body)-2])
+	return str
 }
