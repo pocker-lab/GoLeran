@@ -4,17 +4,19 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
-	goutils "github.com/pocker-lab/goutils"
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
+
+	_ "github.com/go-sql-driver/mysql"
+	goutils "github.com/pocker-lab/goutils"
 )
 
 type sinaJson struct {
 	TotalNum   int    `json:"total_num"`  // 基金总数
-	Data       []data `json:"data"`       // 基金数据切片
+	Data       []data `json:"data"`       // 基金数据结构体切片
 	Lastupdate string `json:"lastupdate"` // 最后更新时间
 
 	// ExecTime   float64 `json:"exec_time"`  // 执行时间
@@ -59,8 +61,8 @@ func MainSina() {
 	fmt.Printf("%v--->%v\n", au1.TotalNum, len(au1.Data))
 
 	// 将数据写入到文件中
-	//bytes, _ := json.MarshalIndent(au1.Data, "", "  ")
-	//ioutil.WriteFile("config.json", bytes, 0644)
+	bytes, _ := json.MarshalIndent(au1.Data, "", "  ")
+	os.WriteFile("sina.json", bytes, 0644)
 	//fmt.Printf(string(bytes))
 	//Goutils.WriteFile2(string(bytes))
 
@@ -94,10 +96,7 @@ func MainSina() {
 		err = stmt.Close()
 		goutils.CheckError(err)
 	}
-
-	err = tx.Commit()
-	goutils.CheckError(err)
-
+	defer tx.Commit()
 }
 
 func GetSina(page, num int) (str string) {
