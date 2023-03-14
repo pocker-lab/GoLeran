@@ -15,8 +15,12 @@
 
 ## Go
 
-[Go](Learning/Go.md)
+1. [Go](Learning/Go.md)
+2. [Golang格式化输出](https://cloud.tencent.com/developer/article/1870559)
+3. [Go语言切片添加元素](https://haicoder.net/golang/golang-slice-add.html)
+4. [Go 中的文件读写](https://zhuanlan.zhihu.com/p/259826174)
+5. 
 
 ## MySQL
 
-[MySQL](Learning/MySQL.md)
+1. [MySQL](Learning/MySQL.md)

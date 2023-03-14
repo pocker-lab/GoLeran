@@ -1,10 +1,9 @@
 package main
 
 import (
-	"GoLeran/datacenter/sina"
+	"GoLeran/datacenter"
 )
 
 func main() {
-	sina.MainSina()
-	// fmt.Println(sina.GetSina(1, 10))
+	datacenter.DataCenter()
 }

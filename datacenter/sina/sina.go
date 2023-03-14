@@ -1,28 +1,25 @@
 package sina
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
-	"io"
-	"log"
-	"net/http"
-	"os"
-	"strconv"
-
-	_ "github.com/go-sql-driver/mysql"
 	goutils "github.com/pocker-lab/goutils"
+	"io"
+	"net/http"
+	"strconv"
+	"sync"
+	"time"
 )
 
-type sinaJson struct {
-	TotalNum   int    `json:"total_num"`  // 基金总数
-	Data       []data `json:"data"`       // 基金数据结构体切片
-	Lastupdate string `json:"lastupdate"` // 最后更新时间
+type JsonSinaStruct struct {
+	TotalNum   int        `json:"total_num"`  // 基金总数
+	Data       []metadata `json:"data"`       // 基金数据结构体切片
+	Lastupdate string     `json:"lastupdate"` // 最后更新时间
 
 	// ExecTime   float64 `json:"exec_time"`  // 执行时间
 	// SortTime   float64 `json:"sort_time"`  // 排序时间
 }
-type data struct {
+type metadata struct {
 	Symbol interface{} `json:"symbol"` // 基金代码
 	Name   string      `json:"name"`   // 基金全称
 	Clrq   string      `json:"clrq"`   // 成立日期
@@ -44,93 +41,86 @@ type data struct {
 	// Zjzfe      int         `json:"zjzfe"`      // 最近总份额(万份)
 }
 
-func MainSina() {
-	str1 := GetSina(1, 9000)
-	str2 := GetSina(2, 9000)
+// GetSinaData 获取sina网上基金数据；每页请求100条数据
+//
+// `page`: 页数；
+//
+// `delay`: 延迟；
+func GetSinaData(page, delay int) (data JsonSinaStruct) {
 	var (
-		au1 = sinaJson{}
-		au2 = sinaJson{}
+		tempdata JsonSinaStruct
+		client   = &http.Client{Timeout: 30 * time.Second} // 设置http客户端，并设置超时为30秒
+		mutex    sync.Mutex                                // 创建一个 mutex，用来保护共享变量 resps
+		wg       sync.WaitGroup                            // 创建一个 WaitGroup，用来等待所有的 goroutine 结束
 	)
 
-	err := json.Unmarshal([]byte(str1), &au1)
-	goutils.CheckError(err)
-	err = json.Unmarshal([]byte(str2), &au2)
-	goutils.CheckError(err)
+	ch := make(chan struct{}, 5) // 定义一个缓冲大小为10的通道，用于控制并发数量
 
-	au1.Data = append(au1.Data, au2.Data...)
-	fmt.Printf("%v--->%v\n", au1.TotalNum, len(au1.Data))
+	// 定义一个字符串变量urls，用来存储请求的URL
+	urls := "http://vip.stock.finance.sina.com.cn/fund_center/data/jsonp.php/IO.XSRV2.CallbackList['9o_rfPFvmkgcHnSk']/NetValueReturn_Service.NetValueReturnOpen?"
 
-	// 将数据写入到文件中
-	bytes, _ := json.MarshalIndent(au1.Data, "", "  ")
-	os.WriteFile("sina.json", bytes, 0644)
-	//fmt.Printf(string(bytes))
-	//Goutils.WriteFile2(string(bytes))
-
-	db, err := sql.Open("mysql", "root:123456@tcp(localhost:3306)/godb?charset=utf8")
+	req, err := http.NewRequest("GET", urls, nil) // 创建一个GET方法的请求，URL为urls，主体为空，并赋值给变量req和err
 	goutils.CheckError(err)
 
-	defer func(db *sql.DB) {
-		err := db.Close()
-		if err != nil {
-			log.Panicln(err)
-		}
-	}(db)
+	// Params 参数
+	q := req.URL.Query() // 调用req.URL.Query()方法，获取请求的查询参数，并赋值给变量q
 
-	_, err = db.Exec("ALTER TABLE sina AUTO_INCREMENT = 0")
-	goutils.CheckError(err)
-
-	tx, err := db.Begin()
-	goutils.CheckError(err)
-
-	//result, err := tx.Exec("INSERT INTO godb.sina (symbol,name,clrq,jjjl) VALUES(?,?,?,?)", "000001", "华夏成长混合", "2001-12-18 00:00:00", "王泽实、万方方")
-	//goutils.CheckError(err)
-	//fmt.Println(result.RowsAffected())
-
-	for _, k := range au1.Data {
-		stmt, err := tx.Prepare("INSERT INTO godb.sina (symbol,name,clrq,jjjl) VALUES(?,?,?,?)")
-		goutils.CheckError(err)
-
-		_, err = stmt.Exec(k.Symbol, k.Name, k.Clrq, k.Jjjl)
-		goutils.CheckError(err)
-
-		err = stmt.Close()
-		goutils.CheckError(err)
-	}
-	defer tx.Commit()
-}
-
-func GetSina(page, num int) (str string) {
-	url := "http://vip.stock.finance.sina.com.cn/fund_center/data/jsonp.php/IO.XSRV2.CallbackList['9o_rfPFvmkgcHnSk']/NetValueReturn_Service.NetValueReturnOpen"
-
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", url, nil)
-	goutils.CheckError(err)
-
-	req.Header.Add("User-Agent", "Apifox/1.0.0 (https://www.apifox.cn)")
-	req.Header.Add("Accept", "*/*")
-	req.Header.Add("Host", "vip.stock.finance.sina.com.cn")
-	req.Header.Add("Connection", "keep-alive")
-	req.Header.Add("Cookie", "MONEY-FINANCE-SINA-COM-CN-WEB5=")
-	q := req.URL.Query()
-	q.Add("page", strconv.Itoa(page))
-	q.Add("num", strconv.Itoa(num))
-	q.Add("sort", "zmjqm")
+	// 调用q.Add方法，给查询参数添加多个键值对
+	q.Add("page", "1")
+	q.Add("num", "100")
+	q.Add("sort", "zmjgm")
 	q.Add("asc", "0")
 	q.Add("ccode", "")
 	q.Add("type2", "")
 	q.Add("type3", "")
-	req.URL.RawQuery = q.Encode()
 
-	res, err := client.Do(req)
-	goutils.CheckError(err)
-	body, err := io.ReadAll(res.Body)
-	goutils.CheckError(err)
+	for i := 165; i <= page; i++ {
+		wg.Add(1) // 每次启动一个协程，就增加等待组的计数
 
-	defer func(Body io.ReadCloser) {
-		_ = Body.Close()
-	}(res.Body)
+		go func(i int) {
+			defer wg.Done()  // 协程结束时，减少等待组的计数
+			ch <- struct{}{} // 向通道发送一个空结构体，如果通道已满，则阻塞等待
 
-	//str = string(body[91 : len(body)-2])
-	str = string(body[91 : len(body)-2])
-	return str
+			time.Sleep(time.Duration(delay) * time.Second) // 延迟 5 秒执行
+			mutex.Lock()                                   // 加锁
+			q.Set("page", strconv.Itoa(i))                 // 调用q.Set方法，设置查询参数page的值为i转换成字符串的结果
+			req.URL.RawQuery = q.Encode()                  // 调用q.Encode()方法，把q转换成一个字符串，并赋值给req.URL.RawQuery
+			mutex.Unlock()                                 // 解锁
+
+			resp, err := client.Do(req) // 调用client.Do(req)方法，用client发送req这个请求，并返回resp这个响应，并赋值给变量resp和err
+			goutils.CheckError(err)
+
+			// 关闭响应体，释放连接资源
+			defer func(Body io.ReadCloser) {
+				err := Body.Close()
+				goutils.CheckError(err)
+			}(resp.Body)
+
+			body, err := io.ReadAll(resp.Body) // 调用io.ReadAll(resp.Body)方法，读取响应主体，并赋值给变量body和err
+			goutils.CheckError(err)
+
+			err = json.Unmarshal(body[91:len(body)-2], &tempdata) // 将网页内容转换为json格式
+			goutils.CheckError(err)
+
+			mutex.Lock()                                    // 加锁
+			data.Data = append(data.Data, tempdata.Data...) // 将获取到的内容累加到data结构体
+			mutex.Unlock()                                  // 解锁
+
+			fmt.Printf("\r-->  总共有%v条数据，已获取%v条数据", tempdata.TotalNum, len(data.Data))
+
+			<-ch // 从通道接收一个空结构体，释放一个缓冲位置
+
+			data.TotalNum = tempdata.TotalNum     // 基金总数
+			data.Lastupdate = tempdata.Lastupdate // 更新时间
+
+			//if tempdata.Data == nil { // 如果获取的内容为空，那么结束循环
+			//	//fmt.Println("\n为空")
+			//	return
+
+		}(i)
+	}
+
+	wg.Wait() // 等待所有协程完成
+	fmt.Println()
+	return data
 }

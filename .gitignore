@@ -12,3 +12,5 @@ gen
 godemo/*.json
 
 GoPing/*.txt
+
+*.json

@@ -2,5 +2,9 @@ github.com/go-sql-driver/mysql v1.7.0 h1:ueSltNNllEqE3qcWBTD0iQd3IpL/6U+mJxLkazJ
 github.com/go-sql-driver/mysql v1.7.0/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
 github.com/pocker-lab/goutils v0.0.0-20230309022001-f50dcdad579f h1:IrGjZLnndyjTY9TYO4l4aPQ1gisq80wdmk1ay13HCQ4=
 github.com/pocker-lab/goutils v0.0.0-20230309022001-f50dcdad579f/go.mod h1:om9Cpdbb41XBTQZHPdT3ekNrtSACIHzInqQGzPVpMGM=
+github.com/pocker-lab/goutils v0.0.0-20230314101838-240b67d40e4b h1:kaMCjxpYguSerzNVa+3Rlvo6RfP4WfcHJ9vcZAKMQaI=
+github.com/pocker-lab/goutils v0.0.0-20230314101838-240b67d40e4b/go.mod h1:om9Cpdbb41XBTQZHPdT3ekNrtSACIHzInqQGzPVpMGM=
+github.com/pocker-lab/goutils v0.0.0-20230314102647-ac8cc99dae20 h1:5vP+p70Q7+imULv12pYfyXbOa1g63py+Wi7jMx8Z8Jk=
+github.com/pocker-lab/goutils v0.0.0-20230314102647-ac8cc99dae20/go.mod h1:om9Cpdbb41XBTQZHPdT3ekNrtSACIHzInqQGzPVpMGM=
 golang.org/x/text v0.8.0 h1:57P1ETyNKtuIjB4SRd15iJxuhj8Gc416Y78H3qgMh68=
 golang.org/x/text v0.8.0/go.mod h1:e1OnstbJyHTd6l/uOt8jFFHp6TRDWZR/bV3emEE/zU8=
